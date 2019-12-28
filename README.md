@@ -18,7 +18,7 @@ Add the service provider to your `config/app.php` file within the `providers` ke
      * Package Service Providers...
      */
 
-    Joselee214\Coders\Joselee214ServiceProvider::class,
+    Joselee214\Ypc\Joselee214ServiceProvider::class,
 ],
 // ...
 ```
@@ -36,7 +36,7 @@ Then you'll need to register the provider in `app/Providers/AppServiceProvider.p
 public function register()
 {
     if ($this->app->environment() == 'local') {
-        $this->app->register(\Joselee214\Coders\Joselee214ServiceProvider::class);
+        $this->app->register(\Joselee214\Ypc\Joselee214ServiceProvider::class);
     }
 }
 ```
