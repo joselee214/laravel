@@ -75,7 +75,7 @@ if( $allServices )
   /**
    * @var \\'.$pconfig['servicesNamespace'].'\\'.$sv[1].'
    */
-  protected $'.$sname.';
+  public $'.$sname.';
 ';
     }
 }
