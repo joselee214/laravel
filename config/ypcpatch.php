@@ -1,15 +1,24 @@
 <?php
 return [
-    'traitsPatchServicesFilePath' => 'app/Traits/YpcPatchServicesTraits.php',
     'patchTraitsNamespace' => 'App\Traits',
-    'servicesPath' => 'app/Services',
-    'excludeServicesFiles'=>[
-        'zzz','zzz' //要写相对路径//  YpcUser/YpcUserService.php
+    'exec' => ['services', 'repositories'],
+
+    'services' => [
+        'dirPath' => 'app/Services',
+        'fileFilter' => 'Service.php',
+        'usePathAsNameSapce' => true,
+        'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
+        'exportTraitsFile' => 'app/Traits/YpcPatchServicesTraits.php',
+        'namespace' => 'App\Services',
     ],
-    'usePathAsServiceNameSapce'=>true, //true:新建的Service 会把路径放到namespace里，生成的traits/PatchServices.php 也是把路径放在前面...
 
-    'servicesNamespace' => 'App\Services',
-
-    'servicesTemplate'=>'', //
+    'repositories' => [
+        'dirPath' => 'app/Repositories',
+        'fileFilter' => 'Repository.php',
+        'usePathAsNameSapce' => true,
+        'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
+        'exportTraitsFile' => 'app/Traits/YpcPatchRepositoriesTraits.php',
+        'namespace' => '',
+    ],
 
 ];

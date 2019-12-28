@@ -13,7 +13,7 @@ class YpcModelsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'ypc:models
+    protected $signature = 'zz:models
                             {--s|schema= : The name of the MySQL database}
                             {--c|connection= : The name of the connection}
                             {--t|table= : The name of the table}';

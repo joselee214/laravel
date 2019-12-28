@@ -13,14 +13,14 @@ class YpcCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'ypc';
+    protected $signature = 'zz';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '扫描services/repository';
+    protected $description = '扫描services/repository生成辅助结构';
 
     /**
      * @var \Joselee214\Ypc\Patch\Factory
@@ -49,58 +49,82 @@ class YpcCommand extends Command
     /**
      * Execute the console command.
      */
+
     public function handle()
     {
         $pconfig = $this->models->config;
-//        print_r($pconfig);
-        $servicePath = trim($pconfig['servicesPath'],DIRECTORY_SEPARATOR);
+        if( isset($this->models->config['exec']) && $this->models->config['exec'] )
+        {
+            foreach ($this->models->config['exec'] as $c)
+            {
+                $pconfig = $this->models->config[$c];
 
-        $allServices = $this->scanDir($servicePath,'Service.php',$pconfig['usePathAsServiceNameSapce'],'',$pconfig['excludeServicesFiles']);
-        $file = $pconfig['traitsPatchServicesFilePath'];
+                $this->handleExportFile(
+                    $this->models->config['patchTraitsNamespace'],
+                    $pconfig['dirPath'],
+                    $pconfig['fileFilter'],
+                    $pconfig['usePathAsNameSapce'],
+                    $pconfig['excludeFiles'],
+                    $pconfig['exportTraitsFile'],
+                    $pconfig['namespace'],
+          );
+            }
+        }
+    }
+
+    public function handleExportFile($patchTraitsNamespace,$dirPath,$fileFilter,$usePathAsNameSapce,$excludeFiles,$exportTraitsFile,$namespace)
+    {
+
+        $dirPath = trim($dirPath,DIRECTORY_SEPARATOR);
+
+        $allHandled = $this->scanDir($dirPath,$fileFilter,$usePathAsNameSapce,'',$excludeFiles);
+        $lengthofFilter = strlen($fileFilter);
+
+        $file = $exportTraitsFile;
 
         $classename = substr(last(explode(DIRECTORY_SEPARATOR,$file)),0,-4);
 
-        $helpfile = substr($pconfig['traitsPatchServicesFilePath'],0,-4).'Helper.php';
+        $helpfile = substr($exportTraitsFile,0,-4).'Helper.php';
         $helpclassename = substr(last(explode(DIRECTORY_SEPARATOR,$helpfile)),0,-4);
-$helpcontent = '<?php
-namespace '.$pconfig['patchTraitsNamespace'].';
+        $helpcontent = '<?php
+namespace '.$patchTraitsNamespace.';
 trait '.$helpclassename.' {
 ';
 
-if( $allServices )
-{
-    foreach ( $allServices as $sname=>$sv )
-    {
-        $helpcontent .= '
+        if( $allHandled )
+        {
+            foreach ( $allHandled as $sname=>$sv )
+            {
+                $helpcontent .= '
   /**
-   * @var \\'.$pconfig['servicesNamespace'].'\\'.$sv[1].'
+   * @var '.($namespace?'\\'.$namespace:'').'\\'.$sv[1].'
    */
   public $'.$sname.';
 ';
-    }
-}
+            }
+        }
 
         $helpcontent .= '
 }
 ';
-    file_put_contents($helpfile,$helpcontent);
+        file_put_contents($helpfile,$helpcontent);
 
 //    $mapfile = substr($file,-4).'-mapconfig.php';
 //    file_put_contents($mapfile,expor)
 
 
-$content = '<?php
-namespace '.$pconfig['patchTraitsNamespace'].';
+        $content = '<?php
+namespace '.$patchTraitsNamespace.';
 /**
  * Trait '.$classename.'
- * @package '.$pconfig['patchTraitsNamespace'].'
- * @mixin \\'.$pconfig['patchTraitsNamespace'].'\\'.$helpclassename.'
+ * @package '.$patchTraitsNamespace.'
+ * @mixin \\'.$patchTraitsNamespace.'\\'.$helpclassename.'
  */
 trait '.$classename.' {
 
   public function __get($name)
   {
-      if( substr($name,-7)===\'Service\' ){
+      if( substr($name,-'.($lengthofFilter-4).')===\''.substr($fileFilter,0,-4).'\' ){
           return self::singleton_'.$classename.'($name);
       }
   }
@@ -108,35 +132,35 @@ trait '.$classename.' {
   public static $instance_'.$classename.'=[];
   public static function singleton_'.$classename.'($class)
   {
-      if( !isset(self::$instance_YpcPatchServicesTraits[$class]) || is_null(self::$instance_YpcPatchServicesTraits[$class]) ){
+      if( !isset(self::$instance_'.$classename.'[$class]) || is_null(self::$instance_'.$classename.'[$class]) ){
           if( isset(self::$classmap_'.$classename.'[$class]) && ($setting=self::$classmap_'.$classename.'[$class]) )
           {
               if( !class_exists($setting[0]) ){
                   require_once base_path().DIRECTORY_SEPARATOR.$setting[1];
               }
-              self::$instance_YpcPatchServicesTraits[$class] = \App::make($setting[0]);
+              self::$instance_'.$classename.'[$class] = \App::make($setting[0]);
           }
           else
           {
-              throw new \Exception(\'找不到Service...\');
+              throw new \Exception(\'找不到 ...\'.$class.\'...\');
           }
       }
-      return self::$instance_YpcPatchServicesTraits[$class];
+      return self::$instance_'.$classename.'[$class];
   }
 
   protected static $classmap_'.$classename.' = [
   ';
 
-if( $allServices )
-{
-    foreach ( $allServices as $sname=>$sv )
-    {
-        $content .= '   \''.$sname.'\'     =>   [\''.$pconfig['servicesNamespace'].'\\'.$sv[1].'\',\''.$sv[2].'\'],
-        ';
-    }
-}
+        if( $allHandled )
+        {
+            foreach ( $allHandled as $sname=>$sv )
+            {
+                $content .= '   \''.$sname.'\'     =>   [\''.($namespace?'\\'.$namespace:'').'\\'.$sv[1].'\',\''.$sv[2].'\'],
+  ';
+            }
+        }
 
-$content .= '  ];
+        $content .= '  ];
 }
 
 ';
@@ -144,11 +168,11 @@ $content .= '  ];
         file_put_contents($file,$content);
 
         $this->info("已生成文件 $file 与  $helpfile");
-        $this->info('请在代码里(根Controller|...)引入traits : use  \\'.$pconfig['patchTraitsNamespace'].'\\'.$classename);
+        $this->info('请在代码里(根Controller|...)引入traits : use  \\'.$patchTraitsNamespace.'\\'.$classename);
 
     }
 
-    public function scanDir($path,$checkFname='Service.php',$pathAsNamePrefix=true,$namePrefix='',$excludeServicesFiles,$passedRelativePath='')
+    public function scanDir($path,$checkFname,$pathAsNamePrefix=true,$namePrefix='',$excludeHandledFiles,$passedRelativePath='')
     {
         $result = [];
         $dirArr = scandir($path);
@@ -156,7 +180,7 @@ $content .= '  ];
             if($v!='.' && $v!='..'){
                 if(is_dir($path.DIRECTORY_SEPARATOR.$v)){
                     $namePrefixDir = $pathAsNamePrefix?($v.$namePrefix):$namePrefix;
-                    $dirResult = $this->scanDir($path.DIRECTORY_SEPARATOR.$v,$checkFname,$pathAsNamePrefix,$namePrefixDir,$excludeServicesFiles,$v);
+                    $dirResult = $this->scanDir($path.DIRECTORY_SEPARATOR.$v,$checkFname,$pathAsNamePrefix,$namePrefixDir,$excludeHandledFiles,$v);
                     if( $pathAsNamePrefix )
                     {
                         //需要检查冲突//
@@ -174,11 +198,11 @@ $content .= '  ];
                 } else {
                     if( $checkFname == substr($v,-strlen($checkFname)) )
                     {
-                        if( empty($excludeServicesFiles) ||  !in_array(trim($passedRelativePath.DIRECTORY_SEPARATOR.$v,DIRECTORY_SEPARATOR),$excludeServicesFiles) )
+                        if( empty($excludeHandledFiles) ||  !in_array(trim($passedRelativePath.DIRECTORY_SEPARATOR.$v,DIRECTORY_SEPARATOR),$excludeHandledFiles) )
                         {
                             $result[ $namePrefix.substr($v,0,-4) ] = [
                                 $v, //文件名
-                                $passedRelativePath.'\\'.substr($v,0,-4),  //类名
+                                ($pathAsNamePrefix?$passedRelativePath.'\\':'').substr($v,0,-4), //类名
                                 $path.DIRECTORY_SEPARATOR.$v    //文件路径
                             ];
 
