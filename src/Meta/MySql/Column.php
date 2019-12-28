@@ -5,13 +5,13 @@
  * Date: 18/09/16 08:36 PM.
  */
 
-namespace Reliese\Meta\MySql;
+namespace Joselee214\Meta\MySql;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Fluent;
 
-class Column implements \Reliese\Meta\Column
+class Column implements \Joselee214\Meta\Column
 {
     /**
      * @var array

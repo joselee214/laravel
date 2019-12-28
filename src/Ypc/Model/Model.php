@@ -5,25 +5,25 @@
  * Date: 11/09/16 12:11 PM.
  */
 
-namespace Reliese\Coders\Model;
+namespace Joselee214\Ypc\Model;
 
 use Illuminate\Support\Str;
-use Reliese\Meta\Blueprint;
+use Joselee214\Meta\Blueprint;
 use Illuminate\Support\Fluent;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Reliese\Coders\Model\Relations\BelongsTo;
+use Joselee214\Ypc\Model\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Reliese\Coders\Model\Relations\ReferenceFactory;
+use Joselee214\Ypc\Model\Relations\ReferenceFactory;
 
 class Model
 {
     /**
-     * @var \Reliese\Meta\Blueprint
+     * @var \Joselee214\Meta\Blueprint
      */
     private $blueprint;
 
     /**
-     * @var \Reliese\Coders\Model\Factory
+     * @var \Joselee214\Ypc\Model\Factory
      */
     private $factory;
 
@@ -38,7 +38,7 @@ class Model
     protected $relations = [];
 
     /**
-     * @var \Reliese\Meta\Blueprint[]
+     * @var \Joselee214\Meta\Blueprint[]
      */
     protected $references = [];
 
@@ -58,12 +58,12 @@ class Model
     protected $casts = [];
 
     /**
-     * @var \Reliese\Coders\Model\Mutator[]
+     * @var \Joselee214\Ypc\Model\Mutator[]
      */
     protected $mutators = [];
 
     /**
-     * @var \Reliese\Coders\Model\Mutation[]
+     * @var \Joselee214\Ypc\Model\Mutation[]
      */
     protected $mutations = [];
 
@@ -165,9 +165,9 @@ class Model
     /**
      * ModelClass constructor.
      *
-     * @param \Reliese\Meta\Blueprint $blueprint
-     * @param \Reliese\Coders\Model\Factory $factory
-     * @param \Reliese\Coders\Model\Mutator[] $mutators
+     * @param \Joselee214\Meta\Blueprint $blueprint
+     * @param \Joselee214\Ypc\Model\Factory $factory
+     * @param \Joselee214\Ypc\Model\Mutator[] $mutators
      * @param bool $loadRelations
      */
     public function __construct(Blueprint $blueprint, Factory $factory, $mutators = [], $loadRelations = true)
@@ -318,7 +318,7 @@ class Model
     /**
      * @param \Illuminate\Support\Fluent $relation
      *
-     * @return $this|\Reliese\Coders\Model\Model
+     * @return $this|\Joselee214\Ypc\Model\Model
      */
     public function makeRelationModel(Fluent $relation)
     {
@@ -431,7 +431,7 @@ class Model
     }
 
     /**
-     * @param \Reliese\Meta\Blueprint[] $references
+     * @param \Joselee214\Meta\Blueprint[] $references
      */
     public function withReferences($references)
     {
@@ -1029,7 +1029,7 @@ class Model
     }
 
     /**
-     * @return \Reliese\Coders\Model\Relation[]
+     * @return \Joselee214\Ypc\Model\Relation[]
      */
     public function getRelations()
     {
@@ -1045,7 +1045,7 @@ class Model
     }
 
     /**
-     * @return \Reliese\Coders\Model\Mutation[]
+     * @return \Joselee214\Ypc\Model\Mutation[]
      */
     public function getMutations()
     {
@@ -1139,7 +1139,7 @@ class Model
     }
 
     /**
-     * @return \Reliese\Meta\Blueprint
+     * @return \Joselee214\Meta\Blueprint
      */
     public function getBlueprint()
     {

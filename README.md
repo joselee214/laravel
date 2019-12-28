@@ -1,23 +1,10 @@
-# Reliese Laravel
-
-[![StyleCI](https://styleci.io/repos/71080508/shield?style=flat)](https://styleci.io/repos/71080508)
-[![Build Status](https://travis-ci.org/reliese/laravel.svg?branch=master)](https://travis-ci.org/reliese/laravel)
-[![Latest Stable Version](https://poser.pugx.org/reliese/laravel/v/stable)](https://packagist.org/packages/reliese/laravel)
-[![Total Downloads](https://poser.pugx.org/reliese/laravel/downloads)](https://packagist.org/packages/reliese/laravel)
-[![Latest Unstable Version](https://poser.pugx.org/reliese/laravel/v/unstable)](https://packagist.org/packages/reliese/laravel)
-[![License](https://poser.pugx.org/reliese/laravel/license)](https://packagist.org/packages/reliese/laravel)
-
-Reliese Laravel is a collection of Laravel Components which aim is 
-to help the development process of Laravel applications by 
-providing some convenient code-generation capabilities.
-
 ## How does it work?
 
 This package expects that you are using Laravel 5.1 or above.
-You will need to import the `reliese/laravel` package via composer:
+You will need to import the `joselee214/laravel` package via composer:
 
 ```shell
-composer require reliese/laravel
+composer require joselee214/laravel
 ```
 
 ### Configuration
@@ -31,7 +18,7 @@ Add the service provider to your `config/app.php` file within the `providers` ke
      * Package Service Providers...
      */
 
-    Reliese\Coders\CodersServiceProvider::class,
+    Joselee214\Coders\Joselee214ServiceProvider::class,
 ],
 // ...
 ```
@@ -40,7 +27,7 @@ Add the service provider to your `config/app.php` file within the `providers` ke
 If you wish to enable generators only for your local environment, you should install it via composer using the --dev option like this:
 
 ```shell
-composer require reliese/laravel --dev
+composer require joselee214/laravel --dev
 ```
 
 Then you'll need to register the provider in `app/Providers/AppServiceProvider.php` file.
@@ -49,7 +36,7 @@ Then you'll need to register the provider in `app/Providers/AppServiceProvider.p
 public function register()
 {
     if ($this->app->environment() == 'local') {
-        $this->app->register(\Reliese\Coders\CodersServiceProvider::class);
+        $this->app->register(\Joselee214\Coders\Joselee214ServiceProvider::class);
     }
 }
 ```
@@ -61,7 +48,7 @@ public function register()
 Add the `models.php` configuration file to your `config` directory and clear the config cache:
 
 ```shell
-php artisan vendor:publish --tag=reliese-models
+php artisan vendor:publish --tag=Joselee214-models
 php artisan config:clear
 ```
 
@@ -92,27 +79,3 @@ php artisan code:models --connection=mysql
 ```shell
 php artisan code:models --schema=shop
 ```
-
-### Customizing Model Scaffolding
-
-To change the scaffolding behaviour you can make `config/models.php` configuration file
-fit your database needs. [Check it out](https://github.com/reliese/laravel/blob/master/config/models.php) ;-)
-
-### Tips
-
-#### 1. Keeping model changes
-
-You may want to generate your models as often as you change your database. In order
-not to lose you own model changes, you should set `base_files` to `true` in your `config/models.php`.
-
-When you enable this feature your models will inherit their base configurations from
-base models. You should avoid adding code to your base models, since you
-will lose all changes when they are generated again.
-
-> Note: You will end up with two models for the same table and you may think it is a horrible idea 
-to have two classes for the same thing. However, it is up to you
-to decide whether this approach gives value to your project :-)
-
-#### Support
-
-For the time being, this package only supports MySQL databases. Support for other databases will be added soon.

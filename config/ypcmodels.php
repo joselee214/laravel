@@ -25,7 +25,7 @@ return [
         |
         */
 
-        'path' => app_path('Models'),
+        'path' => 'app/Models', // app_path('Models'),
 
         /*
         |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
         |
         */
 
-        'parent' => Illuminate\Database\Eloquent\Model::class,
+        'parent' => BaseModel::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -68,8 +68,8 @@ return [
         */
 
         'use' => [
-            // Reliese\Database\Eloquent\BitBooleans::class,
-            // Reliese\Database\Eloquent\BlamableBehavior::class,
+//            Illuminate\Database\Eloquent\Model::class,
+//            Illuminate\Database\Eloquent\SoftDeletes::class,
         ],
 
         /*

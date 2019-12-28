@@ -5,10 +5,10 @@
  * Date: 11/09/16 09:00 PM.
  */
 
-namespace Reliese\Coders\Model;
+namespace Joselee214\Ypc\Model;
 
 use Illuminate\Support\Arr;
-use Reliese\Meta\Blueprint;
+use Joselee214\Meta\Blueprint;
 
 class Config
 {
@@ -28,7 +28,7 @@ class Config
     }
 
     /**
-     * @param \Reliese\Meta\Blueprint $blueprint
+     * @param \Joselee214\Meta\Blueprint $blueprint
      * @param string $key
      * @param mixed $default
      *

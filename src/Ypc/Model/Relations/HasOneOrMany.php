@@ -5,12 +5,12 @@
  * Date: 11/09/16 09:26 PM.
  */
 
-namespace Reliese\Coders\Model\Relations;
+namespace Joselee214\Ypc\Model\Relations;
 
-use Reliese\Support\Dumper;
+use Joselee214\Support\Dumper;
 use Illuminate\Support\Fluent;
-use Reliese\Coders\Model\Model;
-use Reliese\Coders\Model\Relation;
+use Joselee214\Ypc\Model\Model;
+use Joselee214\Ypc\Model\Relation;
 
 abstract class HasOneOrMany implements Relation
 {
@@ -20,12 +20,12 @@ abstract class HasOneOrMany implements Relation
     protected $command;
 
     /**
-     * @var \Reliese\Coders\Model\Model
+     * @var \Joselee214\Ypc\Model\Model
      */
     protected $parent;
 
     /**
-     * @var \Reliese\Coders\Model\Model
+     * @var \Joselee214\Ypc\Model\Model
      */
     protected $related;
 
@@ -33,8 +33,8 @@ abstract class HasOneOrMany implements Relation
      * HasManyWriter constructor.
      *
      * @param \Illuminate\Support\Fluent $command
-     * @param \Reliese\Coders\Model\Model $parent
-     * @param \Reliese\Coders\Model\Model $related
+     * @param \Joselee214\Ypc\Model\Model $parent
+     * @param \Joselee214\Ypc\Model\Model $related
      */
     public function __construct(Fluent $command, Model $parent, Model $related)
     {

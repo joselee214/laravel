@@ -5,7 +5,7 @@
  * Date: 09/10/16 07:34 PM.
  */
 
-namespace Reliese\Database\Eloquent;
+namespace Joselee214\Database\Eloquent;
 
 trait BitBooleans
 {

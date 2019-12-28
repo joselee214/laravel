@@ -5,13 +5,13 @@
  * Date: 05/10/16 11:47 PM.
  */
 
-namespace Reliese\Coders\Model\Relations;
+namespace Joselee214\Ypc\Model\Relations;
 
 use Illuminate\Support\Str;
-use Reliese\Support\Dumper;
+use Joselee214\Support\Dumper;
 use Illuminate\Support\Fluent;
-use Reliese\Coders\Model\Model;
-use Reliese\Coders\Model\Relation;
+use Joselee214\Ypc\Model\Model;
+use Joselee214\Ypc\Model\Relation;
 use Illuminate\Database\Eloquent\Collection;
 
 class BelongsToMany implements Relation
@@ -27,17 +27,17 @@ class BelongsToMany implements Relation
     protected $referenceCommand;
 
     /**
-     * @var \Reliese\Coders\Model\Model
+     * @var \Joselee214\Ypc\Model\Model
      */
     protected $parent;
 
     /**
-     * @var \Reliese\Coders\Model\Model
+     * @var \Joselee214\Ypc\Model\Model
      */
     protected $pivot;
 
     /**
-     * @var \Reliese\Coders\Model\Model
+     * @var \Joselee214\Ypc\Model\Model
      */
     protected $reference;
 
@@ -46,9 +46,9 @@ class BelongsToMany implements Relation
      *
      * @param \Illuminate\Support\Fluent $parentCommand
      * @param \Illuminate\Support\Fluent $referenceCommand
-     * @param \Reliese\Coders\Model\Model $parent
-     * @param \Reliese\Coders\Model\Model $pivot
-     * @param \Reliese\Coders\Model\Model $reference
+     * @param \Joselee214\Ypc\Model\Model $parent
+     * @param \Joselee214\Ypc\Model\Model $pivot
+     * @param \Joselee214\Ypc\Model\Model $reference
      */
     public function __construct(
         Fluent $parentCommand,

@@ -1,19 +1,19 @@
 <?php
 
-namespace Reliese\Coders\Console;
+namespace Joselee214\Ypc\Console;
 
 use Illuminate\Console\Command;
-use Reliese\Coders\Model\Factory;
+use Joselee214\Ypc\Model\Factory;
 use Illuminate\Contracts\Config\Repository;
 
-class CodeModelsCommand extends Command
+class YpcModelsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'code:models
+    protected $signature = 'ypc:models
                             {--s|schema= : The name of the MySQL database}
                             {--c|connection= : The name of the connection}
                             {--t|table= : The name of the table}';
@@ -26,7 +26,7 @@ class CodeModelsCommand extends Command
     protected $description = 'Parse connection schema into models';
 
     /**
-     * @var \Reliese\Coders\Model\Factory
+     * @var \Joselee214\Ypc\Model\Factory
      */
     protected $models;
 
@@ -38,7 +38,7 @@ class CodeModelsCommand extends Command
     /**
      * Create a new command instance.
      *
-     * @param \Reliese\Coders\Model\Factory $models
+     * @param \Joselee214\Ypc\Model\Factory $models
      * @param \Illuminate\Contracts\Config\Repository $config
      */
     public function __construct(Factory $models, Repository $config)

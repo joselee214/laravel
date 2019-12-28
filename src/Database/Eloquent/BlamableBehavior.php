@@ -5,7 +5,7 @@
  * Date: 12/10/16 12:30 AM.
  */
 
-namespace Reliese\Database\Eloquent;
+namespace Joselee214\Database\Eloquent;
 
 trait BlamableBehavior
 {

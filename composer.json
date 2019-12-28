@@ -1,11 +1,10 @@
 {
-    "name": "reliese/laravel",
-    "description": "Reliese Components for Laravel Framework code generation.",
-    "keywords": ["reliese", "laravel"],
-    "homepage": "http://cristianllanos.com",
+    "name": "joselee214/laravel",
+    "description": "Ypc ... Components for Laravel Framework code generation.",
+    "keywords": ["Joselee214", "laravel"],
     "support": {
-        "issues": "https://github.com/reliese/laravel/issues",
-        "source": "https://github.com/reliese/laravel"
+        "issues": "https://github.com/joselee214/laravel/issues",
+        "source": "https://github.com/joselee214/laravel"
     },
     "license": "MIT",
     "authors": [
@@ -30,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Reliese\\": "src/"
+            "Joselee214\\": "src/"
         }
     },
     "autoload-dev": {
@@ -44,7 +43,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Reliese\\Coders\\CodersServiceProvider"
+                "Joselee214\\Ypc\\Joselee214ServiceProvider"
             ]
         }
     }

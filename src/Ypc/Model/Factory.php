@@ -5,12 +5,12 @@
  * Date: 19/09/16 11:58 PM.
  */
 
-namespace Reliese\Coders\Model;
+namespace Joselee214\Ypc\Model;
 
 use Illuminate\Support\Str;
-use Reliese\Meta\Blueprint;
-use Reliese\Support\Classify;
-use Reliese\Meta\SchemaManager;
+use Joselee214\Meta\Blueprint;
+use Joselee214\Support\Classify;
+use Joselee214\Meta\SchemaManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\DatabaseManager;
 
@@ -22,7 +22,7 @@ class Factory
     private $db;
 
     /**
-     * @var \Reliese\Meta\SchemaManager
+     * @var \Joselee214\Meta\SchemaManager
      */
     protected $schemas = [];
 
@@ -32,22 +32,22 @@ class Factory
     protected $files;
 
     /**
-     * @var \Reliese\Support\Classify
+     * @var \Joselee214\Support\Classify
      */
     protected $class;
 
     /**
-     * @var \Reliese\Coders\Model\Config
+     * @var \Joselee214\Ypc\Model\Config
      */
     protected $config;
 
     /**
-     * @var \Reliese\Coders\Model\ModelManager
+     * @var \Joselee214\Ypc\Model\ModelManager
      */
     protected $models;
 
     /**
-     * @var \Reliese\Coders\Model\Mutator[]
+     * @var \Joselee214\Ypc\Model\Mutator[]
      */
     protected $mutators = [];
 
@@ -56,8 +56,8 @@ class Factory
      *
      * @param \Illuminate\Database\DatabaseManager $db
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @param \Reliese\Support\Classify $writer
-     * @param \Reliese\Coders\Model\Config $config
+     * @param \Joselee214\Support\Classify $writer
+     * @param \Joselee214\Ypc\Model\Config $config
      */
     public function __construct(DatabaseManager $db, Filesystem $files, Classify $writer, Config $config)
     {
@@ -68,7 +68,7 @@ class Factory
     }
 
     /**
-     * @return \Reliese\Coders\Model\Mutator
+     * @return \Joselee214\Ypc\Model\Mutator
      */
     public function mutate()
     {
@@ -76,7 +76,7 @@ class Factory
     }
 
     /**
-     * @return \Reliese\Coders\Model\ModelManager
+     * @return \Joselee214\Ypc\Model\ModelManager
      */
     protected function models()
     {
@@ -120,7 +120,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Meta\Blueprint $blueprint
+     * @param \Joselee214\Meta\Blueprint $blueprint
      *
      * @return bool
      */
@@ -136,7 +136,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Meta\Blueprint $blueprint
+     * @param \Joselee214\Meta\Blueprint $blueprint
      *
      * @return bool
      */
@@ -183,7 +183,7 @@ class Factory
      *
      * @param bool $withRelations
      *
-     * @return \Reliese\Coders\Model\Model
+     * @return \Joselee214\Ypc\Model\Model
      */
     public function makeModel($schema, $table, $withRelations = true)
     {
@@ -193,7 +193,7 @@ class Factory
     /**
      * @param string $schema
      *
-     * @return \Reliese\Meta\Schema
+     * @return \Joselee214\Meta\Schema
      */
     public function makeSchema($schema)
     {
@@ -201,7 +201,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @todo: Delegate workload to SchemaManager and ModelManager
      *
@@ -228,7 +228,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      * @param string $name
      *
      * @return string
@@ -244,7 +244,7 @@ class Factory
 
     /**
      * @param string $template
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @return mixed
      */
@@ -325,7 +325,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @return string
      */
@@ -355,7 +355,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @return string
      */
@@ -469,7 +469,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      * @param array $custom
      *
      * @return string
@@ -496,7 +496,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @return bool
      */
@@ -506,7 +506,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -543,7 +543,7 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Coders\Model\Model $model
+     * @param \Joselee214\Ypc\Model\Model $model
      *
      * @return string
      */
@@ -566,11 +566,11 @@ class Factory
     }
 
     /**
-     * @param \Reliese\Meta\Blueprint|null $blueprint
+     * @param \Joselee214\Meta\Blueprint|null $blueprint
      * @param string $key
      * @param mixed $default
      *
-     * @return mixed|\Reliese\Coders\Model\Config
+     * @return mixed|\Joselee214\Ypc\Model\Config
      */
     public function config(Blueprint $blueprint = null, $key = null, $default = null)
     {
