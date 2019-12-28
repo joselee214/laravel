@@ -97,7 +97,7 @@ trait '.$helpclassename.' {
             {
                 $helpcontent .= '
   /**
-   * @var '.($namespace?'\\'.$namespace:'').'\\'.$sv[1].'
+   * @var '.($namespace?'\\'.trim($namespace,'\\'):'').'\\'.trim($sv[1],'\\').'
    */
   public $'.$sname.';
 ';
@@ -155,7 +155,7 @@ trait '.$classename.' {
         {
             foreach ( $allHandled as $sname=>$sv )
             {
-                $content .= '   \''.$sname.'\'     =>   [\''.($namespace?'\\'.$namespace:'').'\\'.$sv[1].'\',\''.$sv[2].'\'],
+                $content .= '   \''.$sname.'\'     =>   [\''.($namespace?'\\'.trim($namespace,'\\'):'').'\\'.trim($sv[1],'\\').'\',\''.$sv[2].'\'],
   ';
             }
         }
