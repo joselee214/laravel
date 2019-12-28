@@ -1,16 +1,15 @@
 {
     "name": "joselee214/laravel",
-    "description": "Ypc ... Components for Laravel Framework code generation.",
+    "description": "Ypc ... Components for Laravel Framework code generation. focker from reliese/laravel @ Cristian Llanos .",
     "keywords": ["Joselee214", "laravel"],
     "support": {
-        "issues": "https://github.com/joselee214/laravel/issues",
         "source": "https://github.com/joselee214/laravel"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Cristian Llanos",
-            "email": "cristianllanos@outlook.com"
+            "name": "Jose",
+            "email": "jose@7yes.com"
         }
     ],
     "require": {
