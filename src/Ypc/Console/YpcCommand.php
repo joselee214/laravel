@@ -63,21 +63,22 @@ class YpcCommand extends Command
                     $this->models->config['patchTraitsNamespace'],
                     $pconfig['dirPath'],
                     $pconfig['fileFilter'],
-                    $pconfig['usePathAsNameSapce'],
+                    $pconfig['usePathAsNamePrefix'],
+                    $pconfig['usePathAsNameSpace'],
                     $pconfig['excludeFiles'],
                     $pconfig['exportTraitsFile'],
-                    $pconfig['namespace'],
-          );
+                    $pconfig['namespace']
+                  );
             }
         }
     }
 
-    public function handleExportFile($patchTraitsNamespace,$dirPath,$fileFilter,$usePathAsNameSapce,$excludeFiles,$exportTraitsFile,$namespace)
+    public function handleExportFile($patchTraitsNamespace,$dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,$excludeFiles,$exportTraitsFile,$namespace)
     {
 
         $dirPath = trim($dirPath,DIRECTORY_SEPARATOR);
 
-        $allHandled = $this->scanDir($dirPath,$fileFilter,$usePathAsNameSapce,'',$excludeFiles);
+        $allHandled = $this->scanDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
         $lengthofFilter = strlen($fileFilter);
 
         $file = $exportTraitsFile;
@@ -172,15 +173,15 @@ trait '.$classename.' {
 
     }
 
-    public function scanDir($path,$checkFname,$pathAsNamePrefix=true,$namePrefix='',$excludeHandledFiles,$passedRelativePath='')
+    public function scanDir($path,$checkFname,$pathAsNamePrefix=true,$usePathAsNameSpace=true,$namePrefix='',$excludeHandledFiles,$passedRelativePath='')
     {
         $result = [];
         $dirArr = scandir($path);
         foreach($dirArr as $v){
             if($v!='.' && $v!='..'){
                 if(is_dir($path.DIRECTORY_SEPARATOR.$v)){
-                    $namePrefixDir = $pathAsNamePrefix?($v.$namePrefix):$namePrefix;
-                    $dirResult = $this->scanDir($path.DIRECTORY_SEPARATOR.$v,$checkFname,$pathAsNamePrefix,$namePrefixDir,$excludeHandledFiles,$v);
+                    $namePrefixDir = $pathAsNamePrefix?($namePrefix.$v):$namePrefix;
+                    $dirResult = $this->scanDir($path.DIRECTORY_SEPARATOR.$v,$checkFname,$pathAsNamePrefix,$usePathAsNameSpace,$namePrefixDir,$excludeHandledFiles,$passedRelativePath.DIRECTORY_SEPARATOR.$v);
                     if( $pathAsNamePrefix )
                     {
                         //需要检查冲突//
@@ -202,7 +203,7 @@ trait '.$classename.' {
                         {
                             $result[ $namePrefix.substr($v,0,-4) ] = [
                                 $v, //文件名
-                                ($pathAsNamePrefix?$passedRelativePath.'\\':'').substr($v,0,-4), //类名
+                                ($usePathAsNameSpace? str_replace(DIRECTORY_SEPARATOR,'\\',$passedRelativePath).'\\':'').substr($v,0,-4), //类名
                                 $path.DIRECTORY_SEPARATOR.$v    //文件路径
                             ];
 

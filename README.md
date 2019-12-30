@@ -1,13 +1,7 @@
-## How does it work?
-
-This package expects that you are using Laravel 5.1 or above.
-You will need to import the `joselee214/laravel` package via composer:
 
 ```shell
 composer require joselee214/laravel
 ```
-
-### Configuration
 
 Add the service provider to your `config/app.php` file within the `providers` key:
 
@@ -59,23 +53,23 @@ Assuming you have already configured your database, you are now all set to go.
 - Let's scaffold some of your models from your default connection.
 
 ```shell
-php artisan code:models
+php artisan zz:models
 ```
 
 - You can scaffold a specific table like this:
 
 ```shell
-php artisan code:models --table=users
+php artisan zz:models --table=users
 ```
 
 - You can also specify the connection:
 
 ```shell
-php artisan code:models --connection=mysql
+php artisan zz:models --connection=mysql
 ```
 
 - If you are using a MySQL database, you can specify which schema you want to scaffold:
 
 ```shell
-php artisan code:models --schema=shop
+php artisan zz:models --schema=shop
 ```

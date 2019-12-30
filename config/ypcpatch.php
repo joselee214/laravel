@@ -6,19 +6,21 @@ return [
     'services' => [
         'dirPath' => 'app/Services',
         'fileFilter' => 'Service.php',
-        'usePathAsNameSapce' => true,
+        'usePathAsNamePrefix' => true,
+        'namespace' => 'App\Services',
+        'usePathAsNameSpace'=>true,
         'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
         'exportTraitsFile' => 'app/Traits/YpcPatchServicesTraits.php',
-        'namespace' => 'App\Services',
     ],
 
     'repositories' => [
         'dirPath' => 'app/Repositories',
         'fileFilter' => 'Repository.php',
-        'usePathAsNameSapce' => true,
-        'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
-        'exportTraitsFile' => 'app/Traits/YpcPatchRepositoriesTraits.php',
+        'usePathAsNamePrefix' => true,
         'namespace' => '',
+        'usePathAsNameSpace' => true,
+        'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
+        'exportTraitsFile' => 'app/Traits/YpcPatchRepositoriesTraits.php'
     ],
 
 ];
