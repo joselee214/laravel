@@ -11,6 +11,7 @@ return [
         'usePathAsNameSpace'=>true,
         'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
         'exportTraitsFile' => 'app/Traits/YpcPatchServicesTraits.php',
+        'updateMap' => [],
     ],
 
     'repositories' => [
@@ -20,7 +21,8 @@ return [
         'namespace' => '',
         'usePathAsNameSpace' => true,
         'excludeFiles' => [], //要写相对路径//  YpcUser/YpcUserService.php //后面点改成正则匹配
-        'exportTraitsFile' => 'app/Traits/YpcPatchRepositoriesTraits.php'
+        'exportTraitsFile' => 'app/Traits/YpcPatchRepositoriesTraits.php',
+        'updateMap' => [],
     ],
 
 ];

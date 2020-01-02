@@ -52,28 +52,29 @@ class YpcCommand extends Command
 
     public function handle()
     {
-        $pconfig = $this->models->config;
-        if( isset($this->models->config['exec']) && $this->models->config['exec'] )
+        $allconfig = $this->models->config;
+        if( isset($allconfig['exec']) && $allconfig['exec'] )
         {
-            foreach ($this->models->config['exec'] as $c)
+            foreach ($allconfig['exec'] as $c)
             {
-                $pconfig = $this->models->config[$c];
+                $pconfig = $allconfig[$c];
 
                 $this->handleExportFile(
-                    $this->models->config['patchTraitsNamespace'],
+                    $allconfig['patchTraitsNamespace'],
                     $pconfig['dirPath'],
                     $pconfig['fileFilter'],
                     $pconfig['usePathAsNamePrefix'],
                     $pconfig['usePathAsNameSpace'],
                     $pconfig['excludeFiles'],
                     $pconfig['exportTraitsFile'],
-                    $pconfig['namespace']
+                    $pconfig['namespace'],
+                    isset($pconfig['updateMap'])?$pconfig['updateMap']:[]
                   );
             }
         }
     }
 
-    public function handleExportFile($patchTraitsNamespace,$dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,$excludeFiles,$exportTraitsFile,$namespace)
+    public function handleExportFile($patchTraitsNamespace,$dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,$excludeFiles,$exportTraitsFile,$namespace,$updateMap=[])
     {
 
         $dirPath = trim($dirPath,DIRECTORY_SEPARATOR);
@@ -81,12 +82,17 @@ class YpcCommand extends Command
         $allHandled = $this->scanDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
         $lengthofFilter = strlen($fileFilter);
 
+        if($updateMap)
+            $allHandled = array_merge($allHandled,$updateMap);
+
         $file = $exportTraitsFile;
 
-        $classename = substr(last(explode(DIRECTORY_SEPARATOR,$file)),0,-4);
+        $explode1 = explode(DIRECTORY_SEPARATOR,$file);
+        $classename = substr(end($explode1),0,-4);
 
         $helpfile = substr($exportTraitsFile,0,-4).'Helper.php';
-        $helpclassename = substr(last(explode(DIRECTORY_SEPARATOR,$helpfile)),0,-4);
+        $explode2 = explode(DIRECTORY_SEPARATOR,$helpfile);
+        $helpclassename = substr(end($explode2),0,-4);
         $helpcontent = '<?php
 namespace '.$patchTraitsNamespace.';
 trait '.$helpclassename.' {
