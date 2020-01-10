@@ -79,7 +79,8 @@ class YpcCommand extends Command
 
         $dirPath = trim($dirPath,DIRECTORY_SEPARATOR);
 
-        $allHandled = $this->scanDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
+        $allHandled = scanYpcDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
+
         $lengthofFilter = strlen($fileFilter);
 
         if($updateMap)
@@ -90,31 +91,31 @@ class YpcCommand extends Command
         $explode1 = explode(DIRECTORY_SEPARATOR,$file);
         $classename = substr(end($explode1),0,-4);
 
-        $helpfile = substr($exportTraitsFile,0,-4).'Helper.php';
-        $explode2 = explode(DIRECTORY_SEPARATOR,$helpfile);
-        $helpclassename = substr(end($explode2),0,-4);
-        $helpcontent = '<?php
-namespace '.$patchTraitsNamespace.';
-trait '.$helpclassename.' {
-';
-
-        if( $allHandled )
-        {
-            foreach ( $allHandled as $sname=>$sv )
-            {
-                $helpcontent .= '
-  /**
-   * @var '.($namespace?'\\'.trim($namespace,'\\'):'').'\\'.trim($sv[1],'\\').'
-   */
-  public $'.$sname.';
-';
-            }
-        }
-
-        $helpcontent .= '
-}
-';
-        file_put_contents($helpfile,$helpcontent);
+//  $helpfile = substr($exportTraitsFile,0,-4).'Helper.php';
+//  $explode2 = explode(DIRECTORY_SEPARATOR,$helpfile);
+//  $helpclassename = substr(end($explode2),0,-4);
+//  $helpcontent = '<?php
+//namespace '.$patchTraitsNamespace.';
+//trait '.$helpclassename.' {
+//';
+//
+//  if( $allHandled )
+//  {
+//    foreach ( $allHandled as $sname=>$sv )
+//    {
+//      $helpcontent .= '
+//  /**
+//   * @var '.($namespace?'\\'.trim($namespace,'\\'):'').'\\'.trim($sv[1],'\\').'
+//   */
+//  public $'.$sname.';
+//';
+//    }
+//  }
+//
+//  $helpcontent .= '
+//}
+//';
+//  file_put_contents($helpfile,$helpcontent);
 
 //    $mapfile = substr($file,-4).'-mapconfig.php';
 //    file_put_contents($mapfile,expor)
@@ -122,14 +123,29 @@ trait '.$helpclassename.' {
 
         $content = '<?php
 namespace '.$patchTraitsNamespace.';
-/**
- * Trait '.$classename.'
- * @package '.$patchTraitsNamespace.'
- * @mixin \\'.$patchTraitsNamespace.'\\'.$helpclassename.'
- */
+
+/**'.PHP_EOL;
+
+        foreach ( $allHandled as $sname=>$sv )
+        {
+            $content .= ' * @property '.($namespace?'\\'.trim($namespace,'\\'):'').'\\'.trim($sv[1],'\\').' $'.$sname.PHP_EOL;
+        }
+
+
+        $content .= ' */
 trait '.$classename.' {
 
   public function __get($name)
+  {
+    return $this->__get'.str_replace('Traits','',$classename).'($name);
+  }
+
+  /**
+   * @param $name
+   * @return \\'.$namespace.'\Base'.substr($fileFilter,0,-4).'
+   * @throws \Exception
+   */
+  protected function __get'.str_replace('Traits','',$classename).'($name)
   {
       if( substr($name,-'.($lengthofFilter-4).')===\''.substr($fileFilter,0,-4).'\' ){
           return self::singleton_'.$classename.'($name);
@@ -174,13 +190,15 @@ trait '.$classename.' {
 
         file_put_contents($file,$content);
 
-        $this->info("已生成文件 $file 与  $helpfile");
-        $this->info('请在代码里(根Controller|...)引入traits : use  \\'.$patchTraitsNamespace.'\\'.$classename);
+        echo "已生成文件 $file".PHP_EOL; // 与  $helpfile";
 
     }
 
     public function scanDir($path,$checkFname,$pathAsNamePrefix=true,$usePathAsNameSpace=true,$namePrefix='',$excludeHandledFiles,$passedRelativePath='')
     {
+        if( empty($passedRelativePath) ){
+            echo '扫描 '.$path.' 文件夹，生成辅助结构 '.PHP_EOL;
+        }
         $result = [];
         $dirArr = scandir($path);
         foreach($dirArr as $v){

@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * 请不要更改,此文件通过数据库刷生成 php artisan zz:models  --schema=erp --conection=xxx
  * Created by Joselee214 Model.
  */
 

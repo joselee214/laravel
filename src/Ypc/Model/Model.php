@@ -349,7 +349,7 @@ class Model
             case 'collection':
                 return '\Illuminate\Support\Collection';
             case 'date':
-                return '\Carbon\Carbon';
+                return '\DateTime';
             case 'binary':
                 return 'string';
             default:
@@ -392,7 +392,7 @@ class Model
     {
         return $this->shouldQualifyTableName()
             ? $this->getQualifiedTable()
-            : $this->getTable();
+            : $this->getTable(true);
     }
 
     /**
