@@ -79,7 +79,7 @@ class YpcCommand extends Command
 
         $dirPath = trim($dirPath,DIRECTORY_SEPARATOR);
 
-        $allHandled = scanDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
+        $allHandled = $this->scanYpcDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
 
         $lengthofFilter = strlen($fileFilter);
 
@@ -194,7 +194,7 @@ trait '.$classename.' {
 
     }
 
-    public function scanDir($path,$checkFname,$pathAsNamePrefix=true,$usePathAsNameSpace=true,$namePrefix='',$excludeHandledFiles,$passedRelativePath='')
+    public function scanYpcDir($path,$checkFname,$pathAsNamePrefix=true,$usePathAsNameSpace=true,$namePrefix='',$excludeHandledFiles,$passedRelativePath='')
     {
         if( empty($passedRelativePath) ){
             echo '扫描 '.$path.' 文件夹，生成辅助结构 '.PHP_EOL;
@@ -205,7 +205,7 @@ trait '.$classename.' {
             if($v!='.' && $v!='..'){
                 if(is_dir($path.DIRECTORY_SEPARATOR.$v)){
                     $namePrefixDir = $pathAsNamePrefix?($namePrefix.$v):$namePrefix;
-                    $dirResult = $this->scanDir($path.DIRECTORY_SEPARATOR.$v,$checkFname,$pathAsNamePrefix,$usePathAsNameSpace,$namePrefixDir,$excludeHandledFiles,$passedRelativePath.DIRECTORY_SEPARATOR.$v);
+                    $dirResult = $this->scanYpcDir($path.DIRECTORY_SEPARATOR.$v,$checkFname,$pathAsNamePrefix,$usePathAsNameSpace,$namePrefixDir,$excludeHandledFiles,$passedRelativePath.DIRECTORY_SEPARATOR.$v);
                     if( $pathAsNamePrefix )
                     {
                         //需要检查冲突//
