@@ -79,7 +79,7 @@ class YpcCommand extends Command
 
         $dirPath = trim($dirPath,DIRECTORY_SEPARATOR);
 
-        $allHandled = scanYpcDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
+        $allHandled = scanDir($dirPath,$fileFilter,$usePathAsNamePrefix,$usePathAsNameSpace,'',$excludeFiles);
 
         $lengthofFilter = strlen($fileFilter);
 
